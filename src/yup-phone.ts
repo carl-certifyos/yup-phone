@@ -40,6 +40,11 @@ Yup.addMethod(Yup.string, YUP_PHONE_METHOD, function yupPhone(
       : '${path} must be a valid phone number.';
   // @ts-ignore
   return this.test(YUP_PHONE_METHOD, errMsg, (value: string) => {
+    /* For values verified by yup that are not required
+     so that we do not give an error on empty input value
+     */
+    if (!value || !value.length) return true;
+
     if (!isValidCountryCode(countryCode)) {
       // if not valid countryCode, then set default country to India (IN)
       countryCode = 'IN';
